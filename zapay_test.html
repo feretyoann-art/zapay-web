@@ -2,7 +2,8 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Zapay Web - Test</title>
+  <title>Zapay Web - Paiement</title>
+
   <style>
     body {
       background: #000;
@@ -10,19 +11,60 @@
       font-family: Arial, sans-serif;
       text-align: center;
       padding-top: 40px;
+      animation: fadeIn 0.8s ease;
     }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     .card {
       display: inline-block;
       border: 2px solid #FFD700;
       border-radius: 16px;
-      padding: 20px 30px;
-      box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+      padding: 25px 30px;
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+      width: 320px;
+      animation: pop 0.6s ease;
     }
+
+    @keyframes pop {
+      0% { transform: scale(0.95); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
     h1 {
       letter-spacing: 3px;
+      margin-bottom: 10px;
     }
+
+    .logo {
+      width: 80px;
+      margin-bottom: 15px;
+      animation: pulse 2s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .info {
+      font-size: 18px;
+      margin: 10px 0;
+    }
+
+    .status {
+      margin-top: 15px;
+      font-size: 16px;
+      color: #FFD700;
+      opacity: 0.9;
+    }
+
     button {
-      margin-top: 20px;
+      margin-top: 25px;
       padding: 12px 24px;
       border-radius: 999px;
       border: none;
@@ -31,19 +73,73 @@
       font-weight: bold;
       font-size: 16px;
       cursor: pointer;
+      transition: 0.2s;
     }
+
+    button:hover {
+      background: #ffea6e;
+    }
+
     button:active {
       transform: scale(0.97);
+    }
+
+    .fallback {
+      margin-top: 20px;
+      font-size: 14px;
+      opacity: 0.8;
     }
   </style>
 </head>
 <body>
+
   <div class="card">
-    <h1>ZAPAY WEB (TEST)</h1>
-    <p>Montant : <strong>TEST</strong></p>
-    <p>Description : <strong>TEST</strong></p>
-    <p>Commerçant : <strong>TEST</strong></p>
-    <button>Payer maintenant (simulation)</button>
+
+    <img class="logo" src="https://raw.githubusercontent.com/feretyoann-art/zapay-web/main/logo.png" alt="Zapay">
+
+    <h1>ZAPAY WEB</h1>
+
+    <p class="info">Montant : <strong id="amount">...</strong></p>
+    <p class="info">Description : <strong id="desc">...</strong></p>
+    <p class="info">Commerçant : <strong id="merchant">...</strong></p>
+
+    <p class="status" id="status">Statut : En attente…</p>
+
+    <button onclick="simulatePayment()">Payer maintenant</button>
+
+    <div class="fallback">
+      <p>Si le paiement ne s’ouvre pas :</p>
+      <button onclick="openSEPA()">Payer via votre banque</button>
+    </div>
+
   </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+
+    const amount = params.get("amount") || "Non spécifié";
+    const desc = params.get("desc") || "Non spécifié";
+    const merchant = params.get("merchant") || "Zapay";
+
+    document.getElementById("amount").innerText = amount;
+    document.getElementById("desc").innerText = desc;
+    document.getElementById("merchant").innerText = merchant;
+
+    function simulatePayment() {
+      document.getElementById("status").innerText = "Statut : Paiement simulé ✔";
+      alert("Paiement simulé — Zapay Web V4");
+    }
+
+    function openSEPA() {
+      const iban = "FR7612345678901234567890123";
+      const bic = "AGRIFRPP";
+
+      const url =
+        `bank://sepa?amount=${amount}&desc=${desc}&iban=${iban}&bic=${bic}&name=${merchant}`;
+
+      window.location.href = url;
+    }
+  </script>
+
 </body>
 </html>
