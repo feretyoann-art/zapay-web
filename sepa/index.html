@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>SEPA Redirect</title>
+  <script>
+    window.onload = function () {
+      const params = new URLSearchParams(window.location.search);
+
+      const amount = params.get("amount") || "0";
+      const desc = params.get("desc") || "";
+      const iban = params.get("iban") || "";
+      const bic = params.get("bic") || "";
+      const name = params.get("name") || "Commerçant";
+
+      // Construction du lien SEPA deep-link
+      const sepaLink =
+        `bank://sepa?amount=${amount}&desc=${desc}&iban=${iban}&bic=${bic}&name=${name}`;
+
+      // Tentative d'ouverture du deep-link
+      window.location.href = sepaLink;
+
+      // Si iOS bloque, on affiche un message
+      setTimeout(() => {
+        document.body.innerHTML = `
+          <h2>Impossible d'ouvrir automatiquement votre banque</h2>
+          <p>Veuillez copier l'IBAN ci-dessous :</p>
+          <p><strong>${iban}</strong></p>
+          <p>Montant : <strong>${amount}</strong></p>
+          <p>Description : <strong>${desc}</strong></p>
+        `;
+      }, 1500);
+    };
+  </script>
+</head>
+<body style="background:#000; color:#FFD700; font-family:Arial; text-align:center; padding-top:40px;">
+  <h1>Redirection SEPA…</h1>
+</body>
+</html>
