@@ -96,5 +96,26 @@
     Zapay © 2026 — Paiement universel
   </div>
 
+  <!-- QR Web dynamique -->
+  <script>
+    const params = new URLSearchParams(window.location.search);
+
+    const amount = params.get("amount") || "0,00";
+    const desc = params.get("desc") || "Paiement";
+    const qr = params.get("qr");
+
+    // Montant dynamique
+    document.getElementById("amount").innerText = amount + " €";
+
+    // Description dynamique
+    document.getElementById("desc").innerText = desc;
+
+    // QR Web dynamique
+    if (qr) {
+      document.getElementById("qr-web").innerHTML =
+        `<img src="${qr}" style="width: 260px;">`;
+    }
+  </script>
+
 </body>
 </html>
