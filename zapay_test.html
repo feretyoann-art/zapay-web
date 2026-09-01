@@ -21,13 +21,6 @@
 
     .logo {
       width: 90px;
-      animation: pulse 2s infinite ease-in-out;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
     }
 
     .title {
@@ -51,16 +44,6 @@
       font-size: 18px;
       opacity: 0.9;
       margin-bottom: 25px;
-    }
-
-    .qr-section {
-      margin-top: 20px;
-    }
-
-    .qr-title {
-      font-size: 20px;
-      margin-bottom: 10px;
-      font-weight: bold;
     }
 
     .qr-box {
@@ -89,44 +72,28 @@
 
 <body>
 
-  <!-- HEADER -->
   <div class="header">
     <img class="logo" src="https://raw.githubusercontent.com/feretyoann-art/zapay-web/main/logo.png?raw=true">
-    <div class="title">ZAPAY WEB V6</div>
+    <div class="title">ZAPAY</div>
   </div>
 
-  <!-- MAIN -->
   <div class="container">
 
     <div class="amount" id="amount">0,00 €</div>
-    <div class="desc" id="desc">Description du paiement</div>
+    <div class="desc" id="desc">Description</div>
 
-    <!-- QR SEPA -->
-    <div class="qr-section">
-      <div class="qr-title">Paiement instantané (QR SEPA)</div>
-      <div class="qr-box" id="qr-sepa">
-        <!-- QR SEPA dynamique ici -->
-      </div>
+    <div class="qr-box" id="qr-web">
+      <!-- QR Web fallback -->
     </div>
 
-    <!-- QR Web -->
-    <div class="qr-section" style="margin-top: 35px;">
-      <div class="qr-title">Paiement universel (QR Web)</div>
-      <div class="qr-box" id="qr-web">
-        <!-- QR Web dynamique ici -->
-      </div>
-    </div>
-
-    <!-- STATUT -->
     <div class="status" id="status">
       En attente du paiement…
     </div>
 
   </div>
 
-  <!-- FOOTER -->
   <div class="footer">
-    Zapay © 2026 — Paiement instantané sans TPE
+    Zapay © 2026 — Paiement universel
   </div>
 
 </body>
