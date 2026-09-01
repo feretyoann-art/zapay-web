@@ -96,13 +96,13 @@
     Zapay © 2026 — Paiement universel
   </div>
 
-  <!-- QR Web dynamique -->
+  <!-- QR Web dynamique + Détection paiement -->
   <script>
     const params = new URLSearchParams(window.location.search);
 
     const amount = params.get("amount") || "0,00";
     const desc = params.get("desc") || "Paiement";
-    const qr = params.get("qr");
+    const qr = params.get("qr"); // V6 : peut être vide
 
     // Montant dynamique
     document.getElementById("amount").innerText = amount + " €";
@@ -110,11 +110,38 @@
     // Description dynamique
     document.getElementById("desc").innerText = desc;
 
-    // QR Web dynamique
+    // QR Web dynamique (V6 : seulement si fourni)
     if (qr) {
       document.getElementById("qr-web").innerHTML =
         `<img src="${qr}" style="width: 260px;">`;
     }
+
+    // ---------------------------------------------------------
+    // DÉTECTION PAIEMENT (V6 compatible)
+    // ---------------------------------------------------------
+    const statusElement = document.getElementById("status");
+
+    async function checkPayment() {
+      try {
+        const response = await fetch(
+          "https://zapay-backend.com/check_payment?amount=" + amount + "&desc=" + desc
+        );
+
+        const data = await response.json();
+
+        if (data.paid === true) {
+          statusElement.innerText = "Paiement validé ✔";
+
+          // Optionnel : retour automatique vers l'app Zapay
+          // window.location.href = "zapay://payment_success";
+        }
+      } catch (e) {
+        console.log("Erreur API :", e);
+      }
+    }
+
+    // Polling toutes les 3 secondes
+    setInterval(checkPayment, 3000);
   </script>
 
 </body>
