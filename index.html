@@ -2,82 +2,38 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Zapay SEPA</title>
-  <style>
-    body {
-      background: #ffffff;
-      font-family: Arial;
-      padding: 20px;
-      color: #000;
-    }
-    .btn {
-      background: yellow;
-      color: black;
-      padding: 15px;
-      border-radius: 10px;
-      font-size: 20px;
-      font-weight: bold;
-      text-align: center;
-      cursor: pointer;
-      margin-top: 20px;
-    }
-    .fallback {
-      margin-top: 20px;
-      font-size: 16px;
-      color: #444;
-    }
-  </style>
+  <title>Zapay Web</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <h2>Paiement SEPA Zapay</h2>
+  <div class="container">
 
-  <p><b>Montant :</b> <span id="amount"></span> €</p>
-  <p><b>Description :</b> <span id="desc"></span></p>
-  <p><b>Commerçant :</b> <span id="merchant"></span></p>
+    <h2>Paiement Zapay</h2>
 
-  <hr>
+    <p><b>Montant :</b> <span id="amount"></span> €</p>
+    <p><b>Description :</b> <span id="desc"></span></p>
+    <p><b>Commerçant :</b> <span id="merchant"></span></p>
 
-  <p><b>IBAN :</b> <span id="iban"></span></p>
-  <p><b>BIC :</b> <span id="bic"></span></p>
+    <hr>
 
-  <div class="btn" id="openBankBtn">
-    Ouvrir votre application bancaire
+    <div class="btn" id="payBtn">
+      Payer via votre banque
+    </div>
+
+    <div class="fallback">
+      Si votre application bancaire ne s’ouvre pas :  
+      <br>
+      <a id="fallbackLink" href="#" target="_blank">Cliquez ici</a>
+    </div>
+
+    <hr>
+
+    <p><b>Statut :</b> <span id="status">En attente de paiement</span></p>
+
   </div>
 
-  <div class="fallback">
-    Si votre application bancaire ne s’ouvre pas :  
-    <br>
-    <a id="fallbackLink" href="#" target="_blank">Cliquez ici</a>
-  </div>
-
-  <script>
-    const urlParams = new URLSearchParams(window.location.search);
-
-    const amount = urlParams.get("amount");
-    const desc = urlParams.get("desc");
-    const merchant = urlParams.get("merchant");
-    const iban = urlParams.get("iban");
-    const bic = urlParams.get("bic");
-
-    document.getElementById("amount").innerText = amount;
-    document.getElementById("desc").innerText = desc;
-    document.getElementById("merchant").innerText = merchant;
-    document.getElementById("iban").innerText = iban;
-    document.getElementById("bic").innerText = bic;
-
-    // Intent SEPA
-    const sepaIntent = `bank://sepa?iban=${iban}&bic=${bic}&amount=${amount}&desc=${desc}`;
-
-    document.getElementById("openBankBtn").onclick = () => {
-      window.location.href = sepaIntent;
-    };
-
-    // Fallback
-    document.getElementById("fallbackLink").href =
-      `https://zapay-backend-1.onrender.com/sepa?amount=${amount}&desc=${desc}&iban=${iban}&bic=${bic}`;
-  </script>
-
+  <script src="script.js"></script>
 </body>
 </html>
