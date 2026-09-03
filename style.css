@@ -1,0 +1,39 @@
+body {
+  background: #ffffff;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  color: #000;
+}
+
+.container {
+  max-width: 500px;
+  margin: auto;
+}
+
+h2 {
+  color: black;
+  margin-bottom: 20px;
+}
+
+.btn {
+  background: yellow;
+  color: black;
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.fallback {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #444;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
