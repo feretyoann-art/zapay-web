@@ -6,17 +6,18 @@ const merchant = urlParams.get("merchant");
 const iban = urlParams.get("iban");
 const bic = urlParams.get("bic");
 
+// Affichage
 document.getElementById("amount").innerText = amount;
 document.getElementById("desc").innerText = desc;
 document.getElementById("merchant").innerText = merchant;
 
-// Intent SEPA
-const sepaIntent = `bank://sepa?iban=${iban}&bic=${bic}&amount=${amount}&desc=${desc}`;
+// Intent SEPA (GitHub Pages)
+const sepaIntent =
+  `https://feretyoann-art.github.io/zapay-web/sepa/?amount=${amount}&desc=${desc}&iban=${iban}&bic=${bic}`;
 
 document.getElementById("payBtn").onclick = () => {
   window.location.href = sepaIntent;
 };
 
-// Fallback
-document.getElementById("fallbackLink").href =
-  `https://zapay-backend-1.onrender.com/sepa?amount=${amount}&desc=${desc}&iban=${iban}&bic=${bic}`;
+// Fallback SEPA (GitHub Pages)
+document.getElementById("fallbackLink").href = sepaIntent;
