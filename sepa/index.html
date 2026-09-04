@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>SEPA Redirect</title>
+  <title>Paiement SEPA</title>
   <script>
     window.onload = function () {
       const params = new URLSearchParams(window.location.search);
@@ -13,24 +13,18 @@
       const bic = params.get("bic") || "";
       const merchant = params.get("merchant") || "Commerçant";
 
-      // Redirection vers la banque via GitHub Pages
-      const redirectUrl =
-        `https://feretyoann-art.github.io/zapay-web/sepa/?amount=${amount}&desc=${desc}&iban=${iban}&bic=${bic}&merchant=${merchant}`;
+      // On affiche directement le fallback (aucune redirection)
+      document.body.innerHTML = `
+        <h2>Paiement SEPA</h2>
+        <p>Commerçant : <strong>${merchant}</strong></p>
+        <p>IBAN : <strong>${iban}</strong></p>
+        <p>Montant : <strong>${amount}</strong></p>
+        <p>Description : <strong>${desc}</strong></p>
 
-      // Tentative d'ouverture
-      window.location.href = redirectUrl;
+        <p style="margin-top:20px;">Scannez ce QR avec votre application bancaire :</p>
 
-      // Fallback si la banque ne s'ouvre pas
-      setTimeout(() => {
-        document.body.innerHTML = `
-          <h2>Impossible d'ouvrir automatiquement votre banque</h2>
-          <p>Veuillez copier l'IBAN ci-dessous :</p>
-          <p><strong>${iban}</strong></p>
-          <p>Montant : <strong>${amount}</strong></p>
-          <p>Description : <strong>${desc}</strong></p>
-          <p>Commerçant : <strong>${merchant}</strong></p>
-        `;
-      }, 1500);
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=BCD%0A001%0A1%0ASCT%0A${bic}%0A${merchant}%0A${iban}%0A${amount}%0A${desc}" />
+      `;
     };
   </script>
 </head>
