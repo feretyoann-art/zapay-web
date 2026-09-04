@@ -11,16 +11,16 @@
       const desc = params.get("desc") || "";
       const iban = params.get("iban") || "";
       const bic = params.get("bic") || "";
-      const name = params.get("name") || "Commerçant";
+      const merchant = params.get("merchant") || "Commerçant";
 
-      // Construction du lien SEPA deep-link
-      const sepaLink =
-        `bank://sepa?amount=${amount}&desc=${desc}&iban=${iban}&bic=${bic}&name=${name}`;
+      // Redirection vers la banque via GitHub Pages
+      const redirectUrl =
+        `https://feretyoann-art.github.io/zapay-web/sepa/?amount=${amount}&desc=${desc}&iban=${iban}&bic=${bic}&merchant=${merchant}`;
 
-      // Tentative d'ouverture du deep-link
-      window.location.href = sepaLink;
+      // Tentative d'ouverture
+      window.location.href = redirectUrl;
 
-      // Si iOS bloque, on affiche un message
+      // Fallback si la banque ne s'ouvre pas
       setTimeout(() => {
         document.body.innerHTML = `
           <h2>Impossible d'ouvrir automatiquement votre banque</h2>
@@ -28,6 +28,7 @@
           <p><strong>${iban}</strong></p>
           <p>Montant : <strong>${amount}</strong></p>
           <p>Description : <strong>${desc}</strong></p>
+          <p>Commerçant : <strong>${merchant}</strong></p>
         `;
       }, 1500);
     };
