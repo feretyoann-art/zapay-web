@@ -13,19 +13,29 @@
       const bic = params.get("bic") || "";
       const merchant = params.get("merchant") || "Commerçant";
 
-      // On affiche directement le fallback (aucune redirection)
       document.body.innerHTML = `
         <h2>Paiement SEPA</h2>
         <p>Commerçant : <strong>${merchant}</strong></p>
-        <p>IBAN : <strong>${iban}</strong></p>
+        <p>IBAN : <strong id="iban">${iban}</strong></p>
         <p>Montant : <strong>${amount}</strong></p>
         <p>Description : <strong>${desc}</strong></p>
 
-        <p style="margin-top:20px;">Scannez ce QR avec votre application bancaire :</p>
+        <button onclick="copyIBAN()" 
+                style="margin-top:20px; padding:12px 24px; font-size:16px; background:#FFD700; border:none; border-radius:8px;">
+          Copier l'IBAN
+        </button>
 
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=BCD%0A001%0A1%0ASCT%0A${bic}%0A${merchant}%0A${iban}%0A${amount}%0A${desc}" />
+        <p style="margin-top:25px; font-size:14px;">
+          Ouvrez votre application bancaire et collez l’IBAN pour effectuer le paiement.
+        </p>
       `;
     };
+
+    function copyIBAN() {
+      const iban = document.getElementById("iban").innerText;
+      navigator.clipboard.writeText(iban);
+      alert("IBAN copié !");
+    }
   </script>
 </head>
 <body style="background:#000; color:#FFD700; font-family:Arial; text-align:center; padding-top:40px;">
